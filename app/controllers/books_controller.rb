@@ -8,22 +8,54 @@ class BooksController < ApplicationController
     
     #Show a single book
     def show
-        #repond back with the book in json
+        book_info ={}
+        for book in @data
+            if book[:id] == params[:id]
+                book_info = book
+            end
+        end
+        render json: book_info
     end
     
     #Create a new book
     def create
-        #respond back with the created book in json
+        new_id = (@data.length   + 1).to_s
+        new_title = params[:title]
+        new_author = params[:author]
+        
+        new_book = {id: new_id, title: new_title, author: new_author}
+        @data.push(new_book)
+        render json: @data
     end
     
     #Update a book
     def update
-        # respond back with the udpated book in json
+        edited_book = {}
+        for book in @data
+        
+            if book[:id] = params[:id]
+                 edited_book=book
+            end
+        end
+        
+        edited_book["title"] = params[:title]
+        edited_book["author"] = params[:author]
+        render json: edited_book
+
     end
     
     #Remove a book
     def destroy
-        # respond back with the deleted book in json
+        deleted_book = {}
+        for book in @data
+        
+            if book[:id] = params[:id]
+                 deleted_book=book
+            end
+        end
+        @data.delete(deleted_book)
+        render json: @data
+       
     end
     
     private
